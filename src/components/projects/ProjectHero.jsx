@@ -66,6 +66,29 @@ export default function ProjectHero({ project }) {
           </Button>
         )}
       </div>
+
+      {/* Featured Screenshot Frame */}
+      {project.image && (
+        <div className="mt-10 rounded-xl border border-[var(--border-strong)] bg-[var(--bg-card)] overflow-hidden shadow-card">
+          <div className="flex items-center justify-between px-4 py-2.5 border-b border-[var(--border-subtle)] bg-[var(--bg-tertiary)]/50 text-[11px] font-mono text-[var(--text-muted)]">
+            <div className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-red-400/80 inline-block" />
+              <span className="w-2.5 h-2.5 rounded-full bg-amber-400/80 inline-block" />
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400/80 inline-block" />
+            </div>
+            <span className="text-[11px] font-medium">{project.title.toLowerCase()}.vercel.app</span>
+            <span className="text-emerald-500 font-semibold">● Production</span>
+          </div>
+          <div className="relative aspect-video max-h-[520px] bg-neutral-900 overflow-hidden">
+            <img
+              src={project.image}
+              alt={`${project.title} live interface preview`}
+              className="w-full h-full object-cover object-top"
+              loading="eager"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -44,7 +44,7 @@ export default function ProjectCard({ project }) {
             </p>
 
             {/* Key Technical Highlights */}
-            <div className="grid grid-cols-2 gap-2.5 mb-6 text-xs text-[var(--text-secondary)]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-6 text-xs text-[var(--text-secondary)]">
               <div className="flex items-center gap-2 p-2 rounded bg-[var(--bg-secondary)] border border-[var(--border-subtle)]">
                 <Radio size={14} className="text-[var(--accent)] shrink-0" />
                 <span className="truncate">Mediasoup SFU Real-time WebRTC</span>

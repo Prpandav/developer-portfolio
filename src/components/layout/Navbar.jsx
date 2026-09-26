@@ -116,7 +116,7 @@ export default function Navbar() {
             type="button"
             onClick={toggleTheme}
             aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-            className="p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] rounded-md transition-colors cursor-pointer"
+            className="p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] rounded-md transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-[var(--accent)]"
           >
             {theme === 'dark' ? (
               <Sun size={17} className="transition-transform hover:rotate-45" />
@@ -132,7 +132,7 @@ export default function Navbar() {
             type="button"
             onClick={toggleTheme}
             aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-            className="p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] rounded-md"
+            className="p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] rounded-md cursor-pointer focus-visible:outline-2 focus-visible:outline-[var(--accent)]"
           >
             {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
           </button>
@@ -142,7 +142,8 @@ export default function Navbar() {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle navigation menu"
             aria-expanded={mobileMenuOpen}
-            className="p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] rounded-md"
+            aria-controls="mobile-navigation-menu"
+            className="p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] rounded-md cursor-pointer focus-visible:outline-2 focus-visible:outline-[var(--accent)]"
           >
             {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -151,7 +152,12 @@ export default function Navbar() {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-[var(--border-subtle)] bg-[var(--bg-card)] px-4 py-4 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150">
+        <div
+          id="mobile-navigation-menu"
+          role="region"
+          aria-label="Mobile Navigation Drawer"
+          className="md:hidden border-b border-[var(--border-subtle)] bg-[var(--bg-card)] px-4 py-4 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150"
+        >
           {navLinks.map((link) => {
             if (link.isExternal) {
               return (
