@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { ArrowDown, FileText, ArrowUpRight } from 'lucide-react';
 import { personalInfo } from '../../data/personal';
 import Button from '../ui/Button';
+import TechBadge from '../ui/TechBadge';
 
 export default function Hero() {
   const techStack = [
@@ -77,12 +78,7 @@ export default function Hero() {
           </p>
           <div className="flex flex-wrap items-center gap-2">
             {techStack.map((tech) => (
-              <span
-                key={tech}
-                className="px-2.5 py-1 text-xs font-mono rounded bg-[var(--bg-secondary)] border border-[var(--border-subtle)] text-[var(--text-secondary)]"
-              >
-                {tech}
-              </span>
+              <TechBadge key={tech} name={tech} size="md" />
             ))}
           </div>
         </div>

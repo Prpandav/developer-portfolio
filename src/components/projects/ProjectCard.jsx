@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, BookOpen, Radio, Users, Film, MessageSquare, Volume2 } from 'lucide-react';
+import { ArrowUpRight, BookOpen, Layers, Lock } from 'lucide-react';
 import { GithubIcon } from '../ui/Icons';
 import Badge from '../ui/Badge';
 import Button from '../ui/Button';
+import TechBadge from '../ui/TechBadge';
 
 export default function ProjectCard({ project }) {
+  const [imgError, setImgError] = useState(false);
   if (!project) return null;
+
+  const displayHighlights =
+    project.highlights ||
+    (project.keyFeatures && project.keyFeatures.slice(0, 4).map((f) => f.title)) ||
+    [];
+
+  const previewHost = project.links?.live
+    ? project.links.live.replace(/^https?:\/\//, '').replace(/\/$/, '')
+    : `${project.slug}.vercel.app`;
 
   return (
     <article className="group relative rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)] hover:border-[var(--border-strong)] transition-all duration-200 overflow-hidden shadow-xs">
@@ -44,34 +55,24 @@ export default function ProjectCard({ project }) {
             </p>
 
             {/* Key Technical Highlights */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-6 text-xs text-[var(--text-secondary)]">
-              <div className="flex items-center gap-2 p-2 rounded bg-[var(--bg-secondary)] border border-[var(--border-subtle)]">
-                <Radio size={14} className="text-[var(--accent)] shrink-0" />
-                <span className="truncate">Mediasoup SFU Real-time WebRTC</span>
+            {displayHighlights.length > 0 && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-6 text-xs text-[var(--text-secondary)]">
+                {displayHighlights.map((highlight, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-center gap-2 p-2 rounded bg-[var(--bg-secondary)] border border-[var(--border-subtle)]"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] shrink-0" />
+                    <span className="truncate">{highlight}</span>
+                  </div>
+                ))}
               </div>
-              <div className="flex items-center gap-2 p-2 rounded bg-[var(--bg-secondary)] border border-[var(--border-subtle)]">
-                <Film size={14} className="text-[var(--accent)] shrink-0" />
-                <span className="truncate">Host-Authoritative Playback Sync</span>
-              </div>
-              <div className="flex items-center gap-2 p-2 rounded bg-[var(--bg-secondary)] border border-[var(--border-subtle)]">
-                <Users size={14} className="text-[var(--accent)] shrink-0" />
-                <span className="truncate">Late-Join State Reconciliation</span>
-              </div>
-              <div className="flex items-center gap-2 p-2 rounded bg-[var(--bg-secondary)] border border-[var(--border-subtle)]">
-                <MessageSquare size={14} className="text-[var(--accent)] shrink-0" />
-                <span className="truncate">Live Chat & Voice Communication</span>
-              </div>
-            </div>
+            )}
 
-            {/* Tech Stack Pills */}
+            {/* Tech Stack Pills with Icons */}
             <div className="flex flex-wrap gap-1.5 mb-6">
               {project.technologies.slice(0, 7).map((tech) => (
-                <span
-                  key={tech}
-                  className="px-2 py-0.5 text-[11px] font-mono rounded bg-[var(--bg-secondary)] border border-[var(--border-subtle)] text-[var(--text-secondary)]"
-                >
-                  {tech}
-                </span>
+                <TechBadge key={tech} name={tech} size="sm" />
               ))}
               {project.technologies.length > 7 && (
                 <span className="px-2 py-0.5 text-[11px] font-mono rounded text-[var(--text-muted)]">
@@ -114,10 +115,22 @@ export default function ProjectCard({ project }) {
                 GitHub
               </Button>
             )}
+
+            {project.links?.admin && (
+              <Button
+                href={project.links.admin}
+                variant="outline"
+                size="sm"
+                icon={Lock}
+                iconPosition="right"
+              >
+                Admin
+              </Button>
+            )}
           </div>
         </div>
 
-        {/* Right / Bottom: Project Visual Frame (Screenshot or Technical Canvas) */}
+        {/* Right / Bottom: Project Visual Frame */}
         <div className="lg:col-span-5 bg-[var(--bg-secondary)] border-t lg:border-t-0 lg:border-l border-[var(--border-subtle)] p-6 flex flex-col justify-center">
           <div className="w-full rounded-lg border border-[var(--border-strong)] bg-[var(--bg-card)] overflow-hidden shadow-xs">
             {/* Window / App Title bar */}
@@ -127,64 +140,54 @@ export default function ProjectCard({ project }) {
                 <span className="w-2.5 h-2.5 rounded-full bg-amber-400/80 inline-block" />
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-400/80 inline-block" />
               </div>
-              <span className="text-[10px] truncate max-w-[140px]">{project.title.toLowerCase()}.app</span>
-              <span className="text-emerald-500 font-semibold">● Live</span>
+              <span className="text-[10px] truncate max-w-[170px]">{previewHost}</span>
+              <span className="text-emerald-500 font-semibold">● Production</span>
             </div>
 
             {/* Display: Real Screenshot OR Fallback Canvas */}
-            {project.image ? (
+            {project.image && !imgError ? (
               <div className="relative aspect-video bg-neutral-900 overflow-hidden group/img">
                 <img
                   src={project.image}
                   alt={`${project.title} screenshot`}
                   className="w-full h-full object-cover object-top transition-transform duration-300 group-hover/img:scale-105"
                   loading="lazy"
+                  onError={() => setImgError(true)}
                 />
               </div>
             ) : (
-              /* Simulated technical player preview when screenshot image is not yet provided */
-              <div className="relative aspect-video bg-neutral-950 flex flex-col items-center justify-center p-4 text-center">
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/40" />
+              /* Fallback interface canvas */
+              <div className="relative aspect-video bg-neutral-950 flex flex-col items-center justify-center p-6 text-center">
+                <div className="absolute inset-0 bg-gradient-to-tr from-black/80 via-neutral-900/60 to-black/80" />
                 
                 <div className="relative z-10 space-y-2">
-                  <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-black/60 border border-neutral-700 text-xs font-mono text-neutral-300">
-                    <Radio size={12} className="text-red-500 animate-pulse" />
-                    <span>Host Streaming: YouTube / Local File</span>
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-900/90 border border-neutral-700 text-xs font-mono text-neutral-300">
+                    <Layers size={13} className="text-[var(--accent)]" />
+                    <span>{project.title}</span>
                   </div>
-                  <p className="text-xs text-neutral-400 font-mono">
-                    Mediasoup SFU RTP Transport · 0.4s Drift
+                  <p className="text-xs text-neutral-400 font-mono max-w-xs line-clamp-2">
+                    {project.tagline}
                   </p>
                 </div>
 
-                {/* Bottom synchronized controls overlay */}
-                <div className="absolute bottom-2 left-3 right-3 z-10 flex items-center justify-between text-[11px] font-mono text-neutral-300">
-                  <div className="flex items-center gap-2">
-                    <span className="text-emerald-400 font-bold">PLAYING</span>
-                    <span>14:28 / 42:10</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-neutral-400">
-                    <Volume2 size={13} />
-                    <span>Guests: 4 Synchronized</span>
-                  </div>
+                <div className="absolute bottom-2.5 left-3.5 right-3.5 z-10 flex items-center justify-between text-[10px] font-mono text-neutral-400">
+                  <span className="text-emerald-400 font-medium">● ACTIVE DEPLOYMENT</span>
+                  <span className="truncate max-w-[140px]">{project.category}</span>
                 </div>
               </div>
             )}
 
             {/* Technical Architecture Info Pill Strip */}
-            <div className="p-3 bg-[var(--bg-card)] border-t border-[var(--border-subtle)] space-y-2">
-              <div className="flex items-center justify-between text-[11px] font-mono">
-                <span className="text-[var(--text-muted)]">Signaling</span>
-                <span className="text-[var(--text-primary)] font-medium">Socket.IO Rooms</span>
+            {project.architecturePills && project.architecturePills.length > 0 && (
+              <div className="p-3 bg-[var(--bg-card)] border-t border-[var(--border-subtle)] space-y-1.5">
+                {project.architecturePills.map((pill, idx) => (
+                  <div key={idx} className="flex items-center justify-between text-[11px] font-mono">
+                    <span className="text-[var(--text-muted)]">{pill.label}</span>
+                    <span className="text-[var(--text-primary)] font-medium">{pill.value}</span>
+                  </div>
+                ))}
               </div>
-              <div className="flex items-center justify-between text-[11px] font-mono">
-                <span className="text-[var(--text-muted)]">Media Transport</span>
-                <span className="text-[var(--text-primary)] font-medium">Mediasoup SFU (DTLS-SRTP)</span>
-              </div>
-              <div className="flex items-center justify-between text-[11px] font-mono">
-                <span className="text-[var(--text-muted)]">Playback Authority</span>
-                <span className="text-emerald-600 dark:text-emerald-400 font-medium">Host-Only Controlled</span>
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

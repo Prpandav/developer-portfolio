@@ -50,7 +50,6 @@ export default function Footer() {
 
         <div className="mt-8 pt-6 border-t border-[var(--border-subtle)] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[var(--text-muted)]">
           <p>© {currentYear} {personalInfo.name}. All rights reserved.</p>
-          <p className="font-mono text-[11px]">Built with React & Vite</p>
         </div>
       </div>
     </footer>

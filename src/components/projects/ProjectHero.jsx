@@ -1,12 +1,17 @@
-import React from 'react';
-import { ArrowLeft, ArrowUpRight, ExternalLink } from 'lucide-react';
+import React, { useState } from 'react';
+import { ArrowLeft, ArrowUpRight, Layers, Lock } from 'lucide-react';
 import { GithubIcon } from '../ui/Icons';
 import { Link } from 'react-router-dom';
 import Badge from '../ui/Badge';
 import Button from '../ui/Button';
 
 export default function ProjectHero({ project }) {
+  const [imgError, setImgError] = useState(false);
   if (!project) return null;
+
+  const previewHost = project.links?.live
+    ? project.links.live.replace(/^https?:\/\//, '').replace(/\/$/, '')
+    : `${project.slug}.vercel.app`;
 
   return (
     <div className="pt-12 pb-10 border-b border-[var(--border-subtle)]">
@@ -76,17 +81,30 @@ export default function ProjectHero({ project }) {
               <span className="w-2.5 h-2.5 rounded-full bg-amber-400/80 inline-block" />
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400/80 inline-block" />
             </div>
-            <span className="text-[11px] font-medium">{project.title.toLowerCase()}.vercel.app</span>
+            <span className="text-[11px] font-medium">{previewHost}</span>
             <span className="text-emerald-500 font-semibold">● Production</span>
           </div>
-          <div className="relative aspect-video max-h-[520px] bg-neutral-900 overflow-hidden">
-            <img
-              src={project.image}
-              alt={`${project.title} live interface preview`}
-              className="w-full h-full object-cover object-top"
-              loading="eager"
-            />
-          </div>
+          {!imgError ? (
+            <div className="relative aspect-video max-h-[520px] bg-neutral-900 overflow-hidden">
+              <img
+                src={project.image}
+                alt={`${project.title} live interface preview`}
+                className="w-full h-full object-cover object-top"
+                loading="eager"
+                onError={() => setImgError(true)}
+              />
+            </div>
+          ) : (
+            <div className="relative aspect-video max-h-[400px] bg-neutral-950 flex flex-col items-center justify-center p-8 text-center">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-900 border border-neutral-700 text-xs font-mono text-neutral-300 mb-3">
+                <Layers size={14} className="text-[var(--accent)]" />
+                <span>Screenshot configured at {project.image}</span>
+              </div>
+              <p className="text-xs text-neutral-400 font-mono max-w-sm">
+                Live app accessible at {previewHost}
+              </p>
+            </div>
+          )}
         </div>
       )}
     </div>

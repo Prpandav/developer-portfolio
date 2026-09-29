@@ -2,6 +2,7 @@ import React from 'react';
 import { Server, Database, Layout, Terminal } from 'lucide-react';
 import { personalInfo } from '../../data/personal';
 import SectionHeading from '../ui/SectionHeading';
+import TechBadge from '../ui/TechBadge';
 
 export default function Engineering() {
   const iconMap = {
@@ -51,12 +52,7 @@ export default function Engineering() {
 
               <div className="mt-5 flex flex-wrap gap-2">
                 {data.items.map((skill) => (
-                  <span
-                    key={skill}
-                    className="px-3 py-1 text-xs font-mono rounded-md bg-[var(--bg-secondary)] border border-[var(--border-subtle)] text-[var(--text-secondary)]"
-                  >
-                    {skill}
-                  </span>
+                  <TechBadge key={skill} name={skill} size="md" />
                 ))}
               </div>
             </div>

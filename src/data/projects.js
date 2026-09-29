@@ -53,6 +53,19 @@ export const projects = [
       ],
     },
 
+    highlights: [
+      "Mediasoup SFU Real-time WebRTC",
+      "Host-Authoritative Playback Sync",
+      "Late-Join State Reconciliation",
+      "Live Chat & Voice Communication",
+    ],
+
+    architecturePills: [
+      { label: "Signaling", value: "Socket.IO Rooms" },
+      { label: "Media Transport", value: "Mediasoup SFU (DTLS-SRTP)" },
+      { label: "Playback Authority", value: "Host-Only Controlled" },
+    ],
+
     links: {
       live: "https://mov2night.vercel.app/",
       github: "https://github.com/Prpandav/Watch-Party-app",
@@ -106,80 +119,204 @@ export const projects = [
         "Watching video content remotely with friends typically presents two major obstacles: noticeable playback drift across participants on third-party video platforms, and severe bandwidth or storage friction when attempting to watch local video files together. Traditional peer-to-peer WebRTC mesh architectures require the sender to upload multiple duplicate streams (O(N) bandwidth per client), while cloud upload workflows require long processing times, hefty storage costs, and privacy concerns.",
 
       solution:
-        "Mov2nigh addresses this with a dual-pipeline architecture: a lightweight WebSocket signaling layer for synchronized state events, paired with a server-side Mediasoup Selective Forwarding Unit (SFU). For YouTube, the host broadcasts authoritative play/pause/seek events to guests. For local media and screen sharing, the host streams a single media track to the SFU, which efficiently forwards RTP packets to all connected room participants with sub-second latency.",
+        "Mov2night addresses this with a dual-pipeline architecture: a lightweight WebSocket signaling layer for synchronized state events, paired with a server-side Mediasoup Selective Forwarding Unit (SFU). For YouTube, the host broadcasts authoritative play/pause/seek events to guests. For local media and screen sharing, the host streams a single media track to the SFU, which efficiently forwards RTP packets to all connected room participants with sub-second latency.",
 
       architectureOverview:
         "The system separates state signaling from heavy media transport. Express and Socket.IO manage room lifecycles, user authentication (JWT), chat persistence in MongoDB, and playback coordination. Mediasoup SFU handles high-bandwidth WebRTC audio/video routing via dedicated worker threads, ensuring encrypted DTLS-SRTP transport and optimal CPU efficiency.",
 
-      technicalImplementation: [
+      challenges: [
         {
-          heading: "Authoritative Host-Guest Playback Model",
-          content:
-            "To prevent conflicting playback instructions and infinite feedback loops, playback commands (play, pause, seek) are validated on the backend. Guests only receive state reconciliation directives; if a guest attempts to manipulate synchronized controls, the interface provides clear host-only feedback without sending unauthorized socket events.",
+          title: "SFU (Selective Forwarding Unit) vs. P2P Mesh Architecture",
+          problem:
+            "A peer-to-peer WebRTC mesh requires the host to upload separate video tracks to every guest (O(N) bandwidth), which saturates consumer upload speeds. Cloud upload approaches cause massive delays and storage bills.",
+          solution:
+            "Implemented Mediasoup SFU on a dedicated worker thread. The host publishes a single media track (O(1) bandwidth), and the server efficiently forwards encrypted RTP packets to all room participants with sub-second latency.",
         },
         {
-          heading: "Mediasoup SFU WebRTC Pipeline",
-          content:
-            "Using mediasoup-client and Mediasoup server workers, the host establishes a WebRTC transport to publish local media or screen capture tracks. The server router assigns consumers for each connected guest, transmitting RTP media packets with minimal latency and eliminating the need to store video files on disk.",
+          title: "Authoritative Playback Synchronization & Drift Correction",
+          problem:
+            "Network jitter caused video playback to drift between participants, while naive synchronization resulted in endless seek loops and jarring player stutters.",
+          solution:
+            "Enforced strict server-side host playback authority. The client player compares local time against host periodic sync pulses, tolerating minor variance with a 1.5-second deadband before triggering an idempotent seek operation.",
         },
         {
-          heading: "Client-Side Drift Correction",
-          content:
-            "The client player monitors elapsed time against host periodic synchronization pulses (`video_sync`). Minor differences (< 1.5 seconds) are tolerated to prevent jarring micro-stutters, while substantial divergence triggers a discrete seek to re-align playback seamlessly.",
-        },
-        {
-          heading: "Room Lifecycle & State Persistence",
-          content:
-            "MongoDB stores user records, room configurations, and recent chat history. Socket.IO room management tracks active participant presence, handling connection drops and restoring context when participants reconnect or join late.",
+          title: "Zero-Cloud Local Video Streaming via HTML5 captureStream()",
+          problem:
+            "Users wanted to watch personal video files together without uploading multi-gigabyte files to cloud storage or risking file persistence on third-party servers.",
+          solution:
+            "Leveraged HTML5 captureStream() on the host's video player to create a live MediaStream, publishing it directly into the Mediasoup SFU pipeline to distribute RTP packets in real time without storing files on disk.",
         },
       ],
+    },
+  },
+  {
+    id: "dev-power-systems",
+    slug: "dev-power-systems",
+    title: "DEV Power Systems",
+    category: "Full-Stack / B2B Industrial Platform",
+    featured: true,
+    tagline:
+      "Industrial LiFePO₄ battery solutions, specification catalog, and administrative operations portal for inventory CRUD & inquiry tracking.",
+
+    shortDescription:
+      "A full-stack industrial platform for custom LiFePO₄ battery packs across solar, agriculture, and backup power. Features a specification catalog, direct WhatsApp inquiry routing, and an authenticated administrative dashboard for battery product CRUD, customer inquiry tracking, and basic business analytics.",
+
+    description:
+      "DEV Power Systems is a full-stack web application built for a custom lithium iron phosphate (LiFePO₄) battery manufacturing business. Alongside a customer-facing catalog with direct WhatsApp lead routing, it features an authenticated administrative portal with full CRUD capabilities to manage battery models and specifications live, track incoming inquiries, and monitor basic product analytics backed by a Node.js/Express REST API on Render.",
+
+    status: "Active / Deployed",
+    image: "/projects/dev-power.png",
+
+    technologies: [
+      "React",
+      "Vite",
+      "Node.js",
+      "Express",
+      "REST API",
+      "JavaScript",
+      "Tailwind CSS",
+      "Axios",
+      "Lucide React",
+      "WhatsApp Business API",
+      "Vercel",
+      "Render",
+    ],
+
+    techCategories: {
+      frontend: ["React", "Vite", "Tailwind CSS", "Lucide React", "Axios"],
+      backend: [
+        "Node.js",
+        "Express REST API",
+        "Session Authentication",
+        "Axios Interceptors (401 Redirect)",
+      ],
+      adminOperations: [
+        "Product CRUD Engine",
+        "Inquiry Management Pipeline",
+        "Catalog & Inquiries Analytics",
+      ],
+      integrations: [
+        "WhatsApp Click-to-Chat API",
+        "Direct Phone Protocol",
+      ],
+      deployment: ["Vercel (Frontend SPA)", "Render (REST API)", "Git CI/CD"],
+    },
+
+    highlights: [
+      "Admin Product CRUD Operations",
+      "Inquiry Tracking & Basic Analytics",
+      "Session Auth & 401 Interceptors",
+      "LiFePO₄ Specs & WhatsApp Routing",
+    ],
+
+    architecturePills: [
+      { label: "Frontend", value: "React + Vite (Vercel)" },
+      { label: "Backend API", value: "Node/Express (Render)" },
+      { label: "Admin Suite", value: "Auth, CRUD & Inquiries" },
+    ],
+
+    links: {
+      live: "https://devlithiumbattry.vercel.app/",
+      github: "https://github.com/Prpandav/Battery_App",
+      admin: "https://devlithiumbattry.vercel.app/admin/login",
+    },
+
+    architectureFlow: [
+      {
+        phase: "Client Portal",
+        title: "Catalog & WhatsApp Routing",
+        description:
+          "Customers filter battery packs by application (agriculture, solar, inverters) and initiate direct WhatsApp inquiries with pre-filled technical specifications.",
+      },
+      {
+        phase: "REST API Services",
+        title: "Express Backend on Render",
+        description:
+          "Node.js/Express REST API on Render (/api/v1) handles product catalog endpoints, session authentication, and centralized inquiry submission storage.",
+      },
+      {
+        phase: "Admin Operations",
+        title: "Product CRUD & Analytics",
+        description:
+          "Authenticated operations dashboard at /admin allows the owner to create, update, or remove battery products, monitor incoming customer inquiries, and review catalog analytics.",
+      },
+    ],
+
+    keyFeatures: [
+      {
+        title: "Authenticated Admin Operations Portal",
+        description:
+          "Secure /admin portal with session authentication and Axios response interceptors that automatically handle session expiry and 401 redirects.",
+      },
+      {
+        title: "Live Product CRUD Management",
+        description:
+          "Complete Create, Read, Update, and Delete engine allowing business operators to add new battery models, update voltages, and edit prices without code deployments.",
+      },
+      {
+        title: "Centralized Inquiry Tracking",
+        description:
+          "Admin dashboard to review and manage customer leads submitted across the platform to ensure prompt quote responses.",
+      },
+      {
+        title: "Basic Operational Analytics",
+        description:
+          "High-level metrics tracking total customer inquiries, popular battery categories, and catalog engagement.",
+      },
+      {
+        title: "Application-Based Battery Catalog",
+        description:
+          "Browse battery solutions organized by real-world use: Agriculture Sprayer Pumps, Solar Storage, Home Inverters/UPS, and Custom Packs.",
+      },
+      {
+        title: "Detailed Technical Specifications",
+        description:
+          "Transparent display of nominal voltage, amp-hour (Ah) capacity, cell chemistry, cycle life, and continuous discharge ratings.",
+      },
+      {
+        title: "Build Quality & Manufacturing Standards",
+        description:
+          "Highlights Grade-A LiFePO₄ cells, heavy-duty spot welding, and integrated Battery Management Systems (BMS) with overcharge and short-circuit protection.",
+      },
+      {
+        title: "Direct WhatsApp Inquiry Flow",
+        description:
+          "Pre-populates battery model details directly into a WhatsApp chat for fast technical consultation and pricing.",
+      },
+    ],
+
+    caseStudy: {
+      problem:
+        "Running an industrial battery business involves two challenges: customers need exact technical specifications before inquiring, and business owners need an easy way to manage battery inventory and track customer leads without editing code or rebuilding the website whenever a model or price changes.",
+
+      solution:
+        "DEV Power Systems combines a customer-facing specification catalog with a secure administrative operations dashboard (/admin). Customers get transparent build quality details and a direct WhatsApp inquiry button. The business owner gets a private admin portal to manage battery products (full CRUD), review customer inquiries, and track basic catalog analytics backed by a Node.js/Express REST API on Render.",
+
+      architectureOverview:
+        "The platform uses a decoupled full-stack architecture. The frontend is a fast React Single Page Application hosted on Vercel. It communicates with a Node.js/Express REST API deployed on Render (/api/v1). Axios interceptors handle session validation and automatically redirect expired sessions to /admin/login.",
 
       challenges: [
         {
-          title: "YouTube Player Re-render and Seek Loops",
+          title: "Dynamic Inventory Management Without Frontend Re-deployments",
           problem:
-            "Initial implementations suffered from player jumping or restarting when state updates caused React components to remount or issue redundant seekTo() calls.",
+            "Hardcoding battery specifications in the frontend meant any price, model, or voltage change required code commits and redeploying the site.",
           solution:
-            "Isolated drift correction into a single player controller component, decoupled state updates from component keys (ensuring currentTime is never used as a component key), and implemented an idempotency threshold before executing seek operations.",
+            "Built a dedicated Node.js/Express REST API with full CRUD endpoints and an authenticated admin panel so the business owner can manage inventory live from any browser.",
         },
         {
-          title: "Streaming Local Media Without Server Uploads",
+          title: "Handling Session Expiry and Protected Admin Routes",
           problem:
-            "Users wanted to watch personal video files without waiting for lengthy cloud uploads or risking file persistence on a third-party server.",
+            "Unauthenticated or expired requests to admin endpoints could cause blank screens or uncaught errors in the frontend.",
           solution:
-            "Leveraged HTML5 captureStream() on the host's local video element to produce a WebRTC MediaStream, routing it directly through the Mediasoup SFU to distribute it in real time to peers.",
+            "Implemented global Axios response interceptors that catch 401 responses, clear invalid session state, and cleanly redirect to /admin/login with a session expiration notice.",
         },
         {
-          title: "WebRTC Transport & Firewall Traversal",
+          title: "High-Ticket Inquiries vs Shopping Cart Friction",
           problem:
-            "Mediasoup requires dedicated UDP and TCP media port ranges (e.g., 40000-41000) and explicit announced IP configurations for proper ICE candidate exchange in production environments.",
+            "Standard e-commerce checkout carts caused customer hesitation because industrial batteries require custom sizing and consultation.",
           solution:
-            "Documented and configured clear environment separation between local development and production cloud VPS deployments, ensuring correct public IP announcement and DTLS handshake completion.",
+            "Replaced checkout carts with pre-filled WhatsApp consultation buttons that initiate direct conversations with zero friction.",
         },
-      ],
-
-      decisions: [
-        {
-          decision: "SFU (Selective Forwarding Unit) instead of Mesh WebRTC",
-          rationale:
-            "A peer-to-peer Mesh topology requires the host to upload separate video tracks to each guest, severely limiting scalability on domestic internet connections. An SFU requires the host to upload only once to the server, which then duplicates and forwards packets to consumers.",
-        },
-        {
-          decision: "Separation of Signaling and Media Transport",
-          rationale:
-            "Using Socket.IO for signaling (room joining, chat, play/pause commands) leverages battle-tested WebSocket fallbacks and simple JSON messaging, while reserving Mediasoup purely for high-performance audio/video RTP streaming.",
-        },
-        {
-          decision: "Strict Server-Side Host Validation",
-          rationale:
-            "Validating that incoming playback and producer events originate from the verified room host prevents malicious or accidental playback disruption by room guests.",
-        },
-      ],
-
-      lessons: [
-        "In real-time synchronized applications, strict separation of controller authority is critical to avoiding feedback loops and race conditions.",
-        "WebRTC media pipelines require careful lifecycle management of producers and consumers to prevent memory leaks and orphaned network transports.",
-        "Drift correction in media players must incorporate hysteresis and deadband thresholds to avoid jarring visual jumps for end users.",
       ],
     },
   },
@@ -197,14 +334,6 @@ export const upcomingProjects = [
     category: "Full-Stack Application",
     description: "Multi-platform invoicing and billing management system.",
     status: "Planned / In Development",
-  },
-  {
-    id: "dev-battery",
-    title: "DEV Lithium Battery Platform",
-    category: "Web Application",
-    description:
-      "Industrial product catalog and technical specification portal.",
-    status: "Planned",
   },
   {
     id: "aptitude-platform",

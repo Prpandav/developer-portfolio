@@ -1,7 +1,6 @@
 import React from 'react';
-import { CheckCircle2, AlertCircle, Cpu, Shield, Network, Zap, HelpCircle } from 'lucide-react';
+import { CheckCircle2, AlertCircle, Wrench } from 'lucide-react';
 import ArchitectureDiagram from './ArchitectureDiagram';
-import Badge from '../ui/Badge';
 
 export default function CaseStudy({ project }) {
   if (!project || !project.caseStudy) return null;
@@ -45,38 +44,7 @@ export default function CaseStudy({ project }) {
         </div>
       </section>
 
-      {/* 2. Key Verified Features */}
-      {project.keyFeatures && project.keyFeatures.length > 0 && (
-        <section className="space-y-6">
-          <div>
-            <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[var(--accent)] mb-2 block">
-              Core Capabilities
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">
-              Key Implemented Features
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {project.keyFeatures.map((feat, index) => (
-              <div
-                key={index}
-                className="p-5 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)]"
-              >
-                <h4 className="font-bold text-sm text-[var(--text-primary)] mb-1.5 flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />
-                  {feat.title}
-                </h4>
-                <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
-                  {feat.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* 3. System Architecture & Flow */}
+      {/* 2. System Architecture & Flow */}
       <section className="space-y-6">
         <div>
           <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[var(--accent)] mb-2 block">
@@ -90,48 +58,41 @@ export default function CaseStudy({ project }) {
           </p>
         </div>
 
-        <ArchitectureDiagram />
-      </section>
+        {project.slug === 'mov2night' && <ArchitectureDiagram />}
 
-      {/* 4. Technical Implementation Deep Dive */}
-      {caseStudy.technicalImplementation && (
-        <section className="space-y-6">
-          <div>
-            <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[var(--accent)] mb-2 block">
-              Deep Dive
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">
-              Technical Implementation
-            </h2>
-          </div>
-
-          <div className="space-y-4">
-            {caseStudy.technicalImplementation.map((item, index) => (
+        {project.architectureFlow && project.architectureFlow.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+            {project.architectureFlow.map((step, idx) => (
               <div
-                key={index}
-                className="p-6 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)]"
+                key={idx}
+                className="p-5 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)] shadow-xs flex flex-col justify-between"
               >
-                <h3 className="text-base font-bold text-[var(--text-primary)] mb-2 font-mono">
-                  0{index + 1}. {item.heading}
-                </h3>
-                <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed">
-                  {item.content}
-                </p>
+                <div>
+                  <span className="font-mono text-xs text-[var(--accent)] font-semibold uppercase tracking-wider block mb-2">
+                    Phase 0{idx + 1} · {step.phase}
+                  </span>
+                  <h4 className="font-bold text-sm sm:text-base text-[var(--text-primary)] mb-2">
+                    {step.title}
+                  </h4>
+                  <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
+                    {step.description}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
-        </section>
-      )}
+        )}
+      </section>
 
-      {/* 5. Engineering Challenges & Solutions */}
+      {/* 3. Key Engineering Challenges & Technical Decisions */}
       {caseStudy.challenges && caseStudy.challenges.length > 0 && (
         <section className="space-y-6">
           <div>
             <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[var(--accent)] mb-2 block">
-              Problem Solving
+              Engineering Deep Dive
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">
-              Challenges & Resolutions
+              Key Technical Challenges & Decisions
             </h2>
           </div>
 
@@ -139,86 +100,34 @@ export default function CaseStudy({ project }) {
             {caseStudy.challenges.map((c, index) => (
               <div
                 key={index}
-                className="p-6 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)]"
+                className="p-6 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)] shadow-xs"
               >
-                <h3 className="text-base font-bold text-[var(--text-primary)] mb-3">
-                  {c.title}
-                </h3>
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="font-mono text-xs text-[var(--accent)] font-bold">
+                    0{index + 1}.
+                  </span>
+                  <h3 className="text-base font-bold text-[var(--text-primary)]">
+                    {c.title}
+                  </h3>
+                </div>
                 
                 <div className="space-y-3 text-sm">
-                  <div className="p-3 rounded bg-[var(--bg-secondary)] border-l-2 border-amber-500">
+                  <div className="p-3.5 rounded bg-[var(--bg-secondary)] border-l-2 border-amber-500">
                     <span className="font-mono text-xs font-bold text-[var(--text-primary)] block mb-1">
-                      Challenge:
+                      Technical Challenge & Tradeoff:
                     </span>
-                    <p className="text-[var(--text-secondary)]">{c.problem}</p>
+                    <p className="text-[var(--text-secondary)] leading-relaxed">{c.problem}</p>
                   </div>
 
-                  <div className="p-3 rounded bg-[var(--bg-secondary)] border-l-2 border-emerald-500">
+                  <div className="p-3.5 rounded bg-[var(--bg-secondary)] border-l-2 border-emerald-500">
                     <span className="font-mono text-xs font-bold text-[var(--text-primary)] block mb-1">
-                      Resolution:
+                      Engineering Solution:
                     </span>
-                    <p className="text-[var(--text-secondary)]">{c.solution}</p>
+                    <p className="text-[var(--text-secondary)] leading-relaxed">{c.solution}</p>
                   </div>
                 </div>
               </div>
             ))}
-          </div>
-        </section>
-      )}
-
-      {/* 6. Technical Decisions & Tradeoffs */}
-      {caseStudy.decisions && caseStudy.decisions.length > 0 && (
-        <section className="space-y-6">
-          <div>
-            <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[var(--accent)] mb-2 block">
-              Tradeoff Analysis
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">
-              Key Technical Decisions
-            </h2>
-          </div>
-
-          <div className="space-y-4">
-            {caseStudy.decisions.map((d, index) => (
-              <div
-                key={index}
-                className="p-5 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-card)]"
-              >
-                <h4 className="font-bold text-sm sm:text-base text-[var(--text-primary)] mb-2">
-                  {d.decision}
-                </h4>
-                <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
-                  {d.rationale}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* 7. Lessons Learned */}
-      {caseStudy.lessons && caseStudy.lessons.length > 0 && (
-        <section className="space-y-6">
-          <div>
-            <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[var(--accent)] mb-2 block">
-              Retrospective
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)]">
-              Engineering Takeaways
-            </h2>
-          </div>
-
-          <div className="p-6 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-secondary)]/60">
-            <ul className="space-y-3">
-              {caseStudy.lessons.map((lesson, idx) => (
-                <li key={idx} className="flex items-start gap-3 text-sm text-[var(--text-secondary)] leading-relaxed">
-                  <span className="font-mono text-xs font-bold text-[var(--accent)] mt-0.5">
-                    0{idx + 1}.
-                  </span>
-                  <span>{lesson}</span>
-                </li>
-              ))}
-            </ul>
           </div>
         </section>
       )}
