@@ -19,9 +19,9 @@ export default function ProjectHero({ project }) {
       <div className="mb-6">
         <Link
           to="/#work"
-          className="inline-flex items-center gap-1.5 text-xs font-mono text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
+          className="group inline-flex items-center gap-1.5 text-xs font-mono text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
         >
-          <ArrowLeft size={14} />
+          <ArrowLeft size={14} className="transition-transform duration-150 group-hover:-translate-x-1" />
           <span>Back to Selected Work</span>
         </Link>
       </div>
@@ -32,7 +32,10 @@ export default function ProjectHero({ project }) {
         </Badge>
         {project.status && (
           <span className="inline-flex items-center gap-1.5 text-xs font-mono text-emerald-600 dark:text-emerald-400 font-medium">
-            <span className="w-2 h-2 rounded-full bg-emerald-500" />
+            <span className="relative flex h-2 w-2" aria-hidden="true">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+            </span>
             {project.status}
           </span>
         )}
@@ -82,7 +85,13 @@ export default function ProjectHero({ project }) {
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400/80 inline-block" />
             </div>
             <span className="text-[11px] font-medium">{previewHost}</span>
-            <span className="text-emerald-500 font-semibold">● Production</span>
+            <div className="inline-flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-semibold text-[11px]">
+              <span className="relative flex h-2 w-2" aria-hidden="true">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+              </span>
+              <span>Production</span>
+            </div>
           </div>
           {!imgError ? (
             <div className="relative aspect-video max-h-[520px] bg-neutral-900 overflow-hidden">

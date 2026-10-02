@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'motion/react';
 import TechBadge from '../ui/TechBadge';
 
 export default function TechStack({ project }) {
@@ -16,7 +17,13 @@ export default function TechStack({ project }) {
   ].filter((cat) => Array.isArray(cat.items) && cat.items.length > 0);
 
   return (
-    <div className="py-12 border-t border-[var(--border-subtle)]">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.5, ease: 'easeOut' }}
+      className="py-12 border-t border-[var(--border-subtle)]"
+    >
       <div className="mb-6">
         <span className="font-mono text-xs font-semibold uppercase tracking-wider text-[var(--accent)] mb-1 block">
           Specifications
@@ -30,7 +37,7 @@ export default function TechStack({ project }) {
         {categories.map((cat) => (
           <div
             key={cat.title}
-            className="p-5 sm:p-6 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)] shadow-xs flex flex-col justify-start"
+            className="p-5 sm:p-6 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)] hover:border-[var(--border-strong)] hover:shadow-[var(--shadow-card)] transition-all duration-200 shadow-xs flex flex-col justify-start"
           >
             <div className="flex items-center justify-between pb-3 mb-3 border-b border-[var(--border-subtle)]">
               <h4 className="font-mono text-xs font-semibold uppercase tracking-wider text-[var(--text-primary)]">
@@ -45,6 +52,6 @@ export default function TechStack({ project }) {
           </div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 }

@@ -20,7 +20,7 @@ export default function ProjectCard({ project }) {
     : `${project.slug}.vercel.app`;
 
   return (
-    <article className="group relative rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)] hover:border-[var(--border-strong)] transition-all duration-200 overflow-hidden shadow-xs">
+    <article className="group relative rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)] hover:border-[var(--border-strong)] hover:-translate-y-1 hover:shadow-[var(--shadow-card)] transition-all duration-200 overflow-hidden shadow-xs">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
         {/* Left / Top: Project Details */}
         <div className="lg:col-span-7 p-6 sm:p-8 flex flex-col justify-between">
@@ -32,7 +32,10 @@ export default function ProjectCard({ project }) {
               </Badge>
               {project.status && (
                 <span className="inline-flex items-center gap-1.5 text-[11px] font-mono text-emerald-600 dark:text-emerald-400 font-medium">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  <span className="relative flex h-2 w-2" aria-hidden="true">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                  </span>
                   {project.status}
                 </span>
               )}
@@ -141,16 +144,22 @@ export default function ProjectCard({ project }) {
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-400/80 inline-block" />
               </div>
               <span className="text-[10px] truncate max-w-[170px]">{previewHost}</span>
-              <span className="text-emerald-500 font-semibold">● Production</span>
+              <div className="inline-flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-semibold text-[10px]">
+                <span className="relative flex h-1.5 w-1.5" aria-hidden="true">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
+                </span>
+                <span>Production</span>
+              </div>
             </div>
 
             {/* Display: Real Screenshot OR Fallback Canvas */}
             {project.image && !imgError ? (
-              <div className="relative aspect-video bg-neutral-900 overflow-hidden group/img">
+              <div className="relative aspect-video bg-neutral-900 overflow-hidden">
                 <img
                   src={project.image}
                   alt={`${project.title} screenshot`}
-                  className="w-full h-full object-cover object-top transition-transform duration-300 group-hover/img:scale-105"
+                  className="w-full h-full object-cover object-top transition-transform duration-300 ease-out group-hover:scale-[1.025]"
                   loading="lazy"
                   onError={() => setImgError(true)}
                 />
@@ -171,7 +180,13 @@ export default function ProjectCard({ project }) {
                 </div>
 
                 <div className="absolute bottom-2.5 left-3.5 right-3.5 z-10 flex items-center justify-between text-[10px] font-mono text-neutral-400">
-                  <span className="text-emerald-400 font-medium">● ACTIVE DEPLOYMENT</span>
+                  <span className="inline-flex items-center gap-1.5 text-emerald-400 font-medium">
+                    <span className="relative flex h-1.5 w-1.5" aria-hidden="true">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
+                    </span>
+                    ACTIVE DEPLOYMENT
+                  </span>
                   <span className="truncate max-w-[140px]">{project.category}</span>
                 </div>
               </div>

@@ -71,7 +71,7 @@ export default function Navbar() {
           to="/"
           className="group flex items-center gap-2.5 font-medium text-sm tracking-tight text-[var(--text-primary)] focus-visible:outline-2 focus-visible:outline-offset-4 rounded"
         >
-          <span className="w-8 h-8 rounded bg-[var(--bg-secondary)] border border-[var(--border-strong)] flex items-center justify-center font-mono font-semibold text-xs text-[var(--accent)] group-hover:border-[var(--accent)] transition-colors">
+          <span className="w-8 h-8 rounded bg-[var(--bg-secondary)] border border-[var(--border-strong)] flex items-center justify-center font-mono font-semibold text-xs text-[var(--accent)] group-hover:border-[var(--accent)] group-hover:scale-105 transition-all duration-150">
             {personalInfo.initials}
           </span>
           <span className="font-semibold tracking-tight group-hover:text-[var(--accent)] transition-colors">
@@ -89,10 +89,10 @@ export default function Navbar() {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-3.5 py-1.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors rounded-md inline-flex items-center gap-1"
+                  className="group px-3.5 py-1.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] active:scale-95 transition-all duration-150 rounded-md inline-flex items-center gap-1.5"
                 >
-                  {link.name}
-                  <ArrowUpRight size={13} className="opacity-60" />
+                  <span>{link.name}</span>
+                  <ArrowUpRight size={13} className="opacity-60 transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--accent)]" />
                 </a>
               );
             }
@@ -102,7 +102,7 @@ export default function Navbar() {
                 key={link.name}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link)}
-                className="px-3.5 py-1.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] transition-colors rounded-md"
+                className="px-3.5 py-1.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] active:scale-95 transition-all duration-150 rounded-md"
               >
                 {link.name}
               </a>
@@ -116,12 +116,12 @@ export default function Navbar() {
             type="button"
             onClick={toggleTheme}
             aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-            className="p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] rounded-md transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-[var(--accent)]"
+            className="p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] rounded-md transition-all duration-150 active:scale-90 cursor-pointer focus-visible:outline-2 focus-visible:outline-[var(--accent)]"
           >
             {theme === 'dark' ? (
-              <Sun size={17} className="transition-transform hover:rotate-45" />
+              <Sun size={17} className="transition-transform duration-300 hover:rotate-90 text-amber-400 hover:text-amber-300" />
             ) : (
-              <Moon size={17} className="transition-transform hover:-rotate-12" />
+              <Moon size={17} className="transition-transform duration-300 hover:-rotate-45 text-blue-600 hover:text-blue-500" />
             )}
           </button>
         </nav>
@@ -132,9 +132,9 @@ export default function Navbar() {
             type="button"
             onClick={toggleTheme}
             aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-            className="p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] rounded-md cursor-pointer focus-visible:outline-2 focus-visible:outline-[var(--accent)]"
+            className="p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] rounded-md cursor-pointer active:scale-90 transition-all duration-150 focus-visible:outline-2 focus-visible:outline-[var(--accent)]"
           >
-            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+            {theme === 'dark' ? <Sun size={18} className="text-amber-400" /> : <Moon size={18} className="text-blue-600" />}
           </button>
 
           <button
@@ -166,10 +166,10 @@ export default function Navbar() {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between px-3 py-2 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] rounded-md"
+                  className="group flex items-center justify-between px-3 py-2 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] active:scale-98 transition-all duration-150 rounded-md"
                 >
                   <span>{link.name}</span>
-                  <ArrowUpRight size={14} className="opacity-60" />
+                  <ArrowUpRight size={14} className="opacity-60 transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--accent)]" />
                 </a>
               );
             }
@@ -182,7 +182,7 @@ export default function Navbar() {
                   handleNavClick(e, link);
                   setMobileMenuOpen(false);
                 }}
-                className="block px-3 py-2 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] rounded-md"
+                className="block px-3 py-2 text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-secondary)] active:scale-98 transition-all duration-150 rounded-md"
               >
                 {link.name}
               </a>

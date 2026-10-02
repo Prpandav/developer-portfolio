@@ -30,7 +30,7 @@ export const personalInfo = {
     leetcode: "https://leetcode.com/u/prpandav/",
     resumeUrl:
       "https://drive.google.com/file/d/1if-aF9dVbjkk6ku8sqZ9tNYi56gKcNYz/view?usp=sharing",
-    location: "India",
+    location: "Surat, Gujarat, India",
   },
 
   // Engineering competencies grouped strictly by responsibility (Phase 11)

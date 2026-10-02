@@ -17,35 +17,73 @@ export default function Hero() {
     'WebRTC'
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.08,
+        delayChildren: 0.05,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 14 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.45,
+        ease: 'easeOut',
+      },
+    },
+  };
+
   return (
-    <section className="pt-20 pb-16 md:pt-28 md:pb-24 max-w-6xl mx-auto px-4 sm:px-6">
+    <section className="relative pt-20 pb-16 md:pt-28 md:pb-24 max-w-6xl mx-auto px-4 sm:px-6">
+      {/* Subtle Architectural Ambient Glow */}
+      <div className="absolute top-1/4 -left-20 w-96 h-96 bg-[var(--accent)]/5 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-1/3 right-0 w-80 h-80 bg-blue-500/5 rounded-full blur-3xl pointer-events-none -z-10" />
+
       <motion.div
-        initial={{ opacity: 0, y: 14 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, ease: 'easeOut' }}
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
         className="max-w-3xl"
       >
         {/* Eyebrow / Status */}
-        <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded border border-[var(--border-subtle)] bg-[var(--bg-secondary)] mb-6">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true" />
-          <span className="font-mono text-xs font-semibold tracking-wider uppercase text-[var(--text-secondary)]">
-            {personalInfo.statusBadge}
-          </span>
-        </div>
+        <motion.div variants={itemVariants} className="mb-6">
+          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded border border-[var(--border-subtle)] bg-[var(--bg-secondary)] shadow-2xs">
+            <span className="relative flex h-2 w-2" aria-hidden="true">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+            </span>
+            <span className="font-mono text-xs font-semibold tracking-wider uppercase text-[var(--text-secondary)]">
+              {personalInfo.statusBadge}
+            </span>
+          </div>
+        </motion.div>
 
         {/* Primary Role & Headline */}
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-[var(--text-primary)] leading-[1.12] mb-6">
+        <motion.h1
+          variants={itemVariants}
+          className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-[var(--text-primary)] leading-[1.12] mb-6"
+        >
           Backend-focused <br />
           <span className="text-[var(--text-secondary)] font-medium">Full-Stack Developer</span>
-        </h1>
+        </motion.h1>
 
         {/* Positioning Statement */}
-        <p className="text-lg md:text-xl text-[var(--text-secondary)] leading-relaxed mb-8 max-w-2xl font-normal">
+        <motion.p
+          variants={itemVariants}
+          className="text-lg md:text-xl text-[var(--text-secondary)] leading-relaxed mb-8 max-w-2xl font-normal"
+        >
           {personalInfo.positioningStatement}
-        </p>
+        </motion.p>
 
         {/* Hero Actions */}
-        <div className="flex flex-wrap items-center gap-3.5 mb-12">
+        <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-3.5 mb-12">
           <Button
             href="#work"
             variant="primary"
@@ -69,10 +107,10 @@ export default function Hero() {
           >
             Resume
           </Button>
-        </div>
+        </motion.div>
 
         {/* Tech Stack Strip */}
-        <div className="pt-6 border-t border-[var(--border-subtle)]">
+        <motion.div variants={itemVariants} className="pt-6 border-t border-[var(--border-subtle)]">
           <p className="text-xs font-mono uppercase tracking-wider text-[var(--text-muted)] mb-3">
             Core Technical Focus
           </p>
@@ -81,7 +119,7 @@ export default function Hero() {
               <TechBadge key={tech} name={tech} size="md" />
             ))}
           </div>
-        </div>
+        </motion.div>
       </motion.div>
     </section>
   );

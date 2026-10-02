@@ -212,7 +212,7 @@ export default function TechBadge({ name, size = 'sm', className = '' }) {
 
   return (
     <span
-      className={`inline-flex items-center max-w-full font-mono rounded-md bg-[var(--bg-secondary)] border border-[var(--border-subtle)] text-[var(--text-secondary)] hover:border-[var(--border-strong)] hover:text-[var(--text-primary)] transition-all duration-150 shadow-2xs ${sizeClasses} ${className}`}
+      className={`inline-flex items-center max-w-full font-mono rounded-md bg-[var(--bg-secondary)] border border-[var(--border-subtle)] text-[var(--text-secondary)] hover:border-[var(--border-strong)] hover:text-[var(--text-primary)] hover:-translate-y-0.5 hover:shadow-2xs transition-all duration-150 cursor-default select-none ${sizeClasses} ${className}`}
     >
       <span className="shrink-0 flex items-center justify-center">
         {getTechIcon(name, iconSize)}
