@@ -7,7 +7,9 @@ export default function TechStack({ project }) {
 
   const categories = [
     { title: 'Frontend & UI', items: project.techCategories.frontend },
+    { title: 'Mobile & POS Client', items: project.techCategories.mobile },
     { title: 'Backend & APIs', items: project.techCategories.backend },
+    { title: 'Financial & Tax Engine', items: project.techCategories.financialEngine },
     { title: 'Admin & Operations', items: project.techCategories.adminOperations },
     { title: 'Database & Storage', items: project.techCategories.database },
     { title: 'Architecture & System', items: project.techCategories.architecture },
@@ -18,10 +20,10 @@ export default function TechStack({ project }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.5, ease: 'easeOut' }}
+      viewport={{ once: true, amount: 0.05 }}
+      transition={{ duration: 0.45, ease: 'easeOut' }}
       className="py-12 border-t border-[var(--border-subtle)]"
     >
       <div className="mb-6">

@@ -14,6 +14,11 @@ import {
   Cloud,
   FileCode,
   Globe,
+  Receipt,
+  Printer,
+  Calculator,
+  Smartphone,
+  FileSpreadsheet,
 } from 'lucide-react';
 import { GithubIcon } from './Icons';
 
@@ -29,6 +34,35 @@ function ReactIcon({ size = 14, className = '' }) {
         <ellipse rx="11" ry="4.2" transform="rotate(60)" />
         <ellipse rx="11" ry="4.2" transform="rotate(120)" />
       </g>
+    </svg>
+  );
+}
+
+function NextIcon({ size = 14, className = '' }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 180 180" className={className} fill="none">
+      <circle cx="90" cy="90" r="90" fill="#000" />
+      <path d="M149.508 157.08L69.142 54H54v71.97h12.114V69.384l72.274 93.303a90.04 90.04 0 0011.12-5.607z" fill="url(#next-grad)" />
+      <path d="M115 54h12v72h-12z" fill="url(#next-grad2)" />
+      <defs>
+        <linearGradient id="next-grad" x1="109" y1="116.5" x2="144.5" y2="160.5" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#fff" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0" />
+        </linearGradient>
+        <linearGradient id="next-grad2" x1="121" y1="54" x2="120.799" y2="106.875" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#fff" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+    </svg>
+  );
+}
+
+function TSIcon({ size = 14, className = '' }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" className={className}>
+      <rect width="24" height="24" rx="3" fill="#3178c6" />
+      <path d="M12.5 9h-7v2h2.4v8h2.3v-8h2.3V9zm3 4.2c0-1.4 1.1-2.2 2.7-2.2 1.3 0 2.3.6 2.8 1.4l-1.6 1.1c-.3-.4-.7-.6-1.2-.6-.5 0-.8.3-.8.6 0 .4.3.5 1.1.8 1.8.6 2.6 1.4 2.6 2.7 0 1.5-1.2 2.4-2.9 2.4-1.5 0-2.6-.7-3.1-1.7l1.7-1c.3.5.8.8 1.4.8.6 0 .9-.3.9-.6 0-.4-.4-.5-1.2-.8-1.5-.5-2.4-1.3-2.4-2.6z" fill="#fff" />
     </svg>
   );
 }
@@ -77,6 +111,38 @@ function MongoIcon({ size = 14, className = '' }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" className={className} fill="#00ed64">
       <path d="M12.007 0C11.66 0 11.23.23 11.02.58c-.9 1.53-4.52 7.74-4.52 12.08 0 4.16 3.03 7.82 5.5 10.34.2.2.49.2.69 0 2.47-2.52 5.5-6.18 5.5-10.34 0-4.34-3.62-10.55-4.52-12.08-.21-.35-.64-.58-.99-.58h-.17zm-.08 1.82c.4 1.05 3.32 8.87 3.32 10.84 0 2.93-1.65 6.04-3.24 7.95V1.82z" />
+    </svg>
+  );
+}
+
+function PostgresIcon({ size = 14, className = '' }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" className={className} fill="#336791">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.2 16.5c-2.3 0-4.2-1.7-4.2-3.8 0-.4.1-.7.2-1.1-1.3-.2-2.3-1.3-2.3-2.6 0-1.5 1.2-2.7 2.7-2.7.2 0 .4 0 .6.1.7-1.3 2-2.2 3.6-2.2 2.2 0 4 1.8 4 4 0 .2 0 .4-.1.6 1 .6 1.7 1.7 1.7 3 0 1.9-1.5 3.5-3.4 3.7-.3.6-.8 1-1.8 1z" />
+    </svg>
+  );
+}
+
+function PrismaIcon({ size = 14, className = '' }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" className={className} fill="#2d3748">
+      <path d="M13.606 2.083a.987.987 0 0 0-1.125.174l-9.1 8.877a.99.99 0 0 0-.256.974l3.87 11.23a.99.99 0 0 0 .977.662h9.722a.99.99 0 0 0 .937-.674l3.1-9.2a.99.99 0 0 0-.222-1.018l-7.903-10.025zm-.298 2.378l6.577 8.344-2.585 7.675H8.38l-3.23-9.37 7.158-6.649z" />
+    </svg>
+  );
+}
+
+function SQLiteIcon({ size = 14, className = '' }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" className={className} fill="#003B57">
+      <path d="M22 6.5C22 4 17.5 2 12 2S2 4 2 6.5 6.5 11 12 11s10-2 10-4.5zm0 5.5c0 2.5-4.5 4.5-10 4.5S2 14.5 2 12v3.5C2 18 6.5 20 12 20s10-2 10-4.5V12zm0-2.8V12c-2 1.8-6.1 2.8-10 2.8S4 13.8 2 12V9.2C4.1 11 8.1 12 12 12s7.9-1 10-2.8z" />
+    </svg>
+  );
+}
+
+function ExpoIcon({ size = 14, className = '' }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" className={className} fill="currentColor">
+      <path d="M12 2L2 19.5h5.5L12 11.8l4.5 7.7H22L12 2zm0 5.2l2.3 3.9H9.7L12 7.2z" />
     </svg>
   );
 }
@@ -136,23 +202,30 @@ function PostmanIcon({ size = 14, className = '' }) {
 export function getTechIcon(techName, size = 13) {
   const norm = (techName || '').toLowerCase().trim();
 
-  // Core Frontend
+  // Core Frontend & Frameworks
+  if (norm.includes('next')) return <NextIcon size={size} />;
+  if (norm.includes('react native')) return <Smartphone size={size} className="text-sky-400 shrink-0" />;
   if (norm.includes('react')) return <ReactIcon size={size} />;
   if (norm.includes('vite')) return <ViteIcon size={size} />;
   if (norm.includes('tailwind')) return <TailwindIcon size={size} />;
+  if (norm.includes('typescript') || norm === 'ts') return <TSIcon size={size} />;
   if (norm.includes('javascript') || norm === 'js') return <JSIcon size={size} />;
+  if (norm.includes('expo')) return <ExpoIcon size={size} />;
   if (norm.includes('html')) return <FileCode size={size} className="text-orange-500 shrink-0" />;
   if (norm.includes('css')) return <Layers size={size} className="text-sky-400 shrink-0" />;
 
   // Backend & APIs
   if (norm.includes('node')) return <NodeIcon size={size} />;
+  if (norm.includes('prisma')) return <PrismaIcon size={size} />;
   if (norm.includes('express')) return <Server size={size} className="text-slate-300 shrink-0" />;
   if (norm.includes('rest') || norm.includes('api')) return <Cpu size={size} className="text-amber-400 shrink-0" />;
   if (norm.includes('axios')) return <Globe size={size} className="text-blue-400 shrink-0" />;
 
-  // Databases
+  // Databases & Storage
   if (norm.includes('mongo')) return <MongoIcon size={size} />;
-  if (norm.includes('sql') || norm.includes('postgres') || norm.includes('database')) {
+  if (norm.includes('postgres')) return <PostgresIcon size={size} />;
+  if (norm.includes('sqlite')) return <SQLiteIcon size={size} />;
+  if (norm.includes('sql') || norm.includes('database')) {
     return <Database size={size} className="text-emerald-400 shrink-0" />;
   }
 
@@ -165,12 +238,26 @@ export function getTechIcon(techName, size = 13) {
     return <Network size={size} className="text-cyan-400 shrink-0" />;
   }
 
+  // Financial Math, Billing & Printing
+  if (norm.includes('thermal') || norm.includes('esc/pos') || norm.includes('print')) {
+    return <Printer size={size} className="text-orange-400 shrink-0" />;
+  }
+  if (norm.includes('gst') || norm.includes('gstr') || norm.includes('invoice') || norm.includes('receipt') || norm.includes('tax')) {
+    return <Receipt size={size} className="text-emerald-400 shrink-0" />;
+  }
+  if (norm.includes('paise') || norm.includes('math') || norm.includes('khata') || norm.includes('ledger') || norm.includes('drawer')) {
+    return <Calculator size={size} className="text-yellow-400 shrink-0" />;
+  }
+  if (norm.includes('csv') || norm.includes('report') || norm.includes('sheet')) {
+    return <FileSpreadsheet size={size} className="text-green-400 shrink-0" />;
+  }
+
   // Integrations & Social
   if (norm.includes('whatsapp') || norm.includes('phone')) return <WhatsAppIcon size={size} />;
   if (norm.includes('youtube')) return <YouTubeIcon size={size} />;
 
   // Security & Auth
-  if (norm.includes('jwt') || norm.includes('auth') || norm.includes('session') || norm.includes('interceptor')) {
+  if (norm.includes('jwt') || norm.includes('auth') || norm.includes('session') || norm.includes('interceptor') || norm.includes('rate-limit') || norm.includes('helmet')) {
     return <Lock size={size} className="text-amber-400 shrink-0" />;
   }
 
@@ -185,7 +272,7 @@ export function getTechIcon(techName, size = 13) {
   }
 
   // Business & Admin Operations
-  if (norm.includes('crud') || norm.includes('product')) return <Sliders size={size} className="text-indigo-400 shrink-0" />;
+  if (norm.includes('crud') || norm.includes('product') || norm.includes('sync')) return <Sliders size={size} className="text-indigo-400 shrink-0" />;
   if (norm.includes('inquiry') || norm.includes('analytics') || norm.includes('metric')) {
     return <BarChart3 size={size} className="text-teal-400 shrink-0" />;
   }

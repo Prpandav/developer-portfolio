@@ -94,17 +94,17 @@ export default function ProjectHero({ project }) {
             </div>
           </div>
           {!imgError ? (
-            <div className="relative aspect-video max-h-[520px] bg-neutral-900 overflow-hidden">
+            <div className="relative w-full bg-neutral-950 flex items-center justify-center overflow-hidden">
               <img
                 src={project.image}
                 alt={`${project.title} live interface preview`}
-                className="w-full h-full object-cover object-top"
+                className="w-full h-auto max-h-[640px] object-contain object-center block mx-auto"
                 loading="eager"
                 onError={() => setImgError(true)}
               />
             </div>
           ) : (
-            <div className="relative aspect-video max-h-[400px] bg-neutral-950 flex flex-col items-center justify-center p-8 text-center">
+            <div className="relative w-full aspect-video bg-neutral-950 flex flex-col items-center justify-center p-8 text-center">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-900 border border-neutral-700 text-xs font-mono text-neutral-300 mb-3">
                 <Layers size={14} className="text-[var(--accent)]" />
                 <span>Screenshot configured at {project.image}</span>

@@ -11,10 +11,10 @@ export default function CaseStudy({ project }) {
     <div className="py-12 space-y-16 max-w-4xl">
       {/* 1. Problem & Solution Overview */}
       <motion.section
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-50px' }}
-        transition={{ duration: 0.5, ease: 'easeOut' }}
+        viewport={{ once: true, amount: 0.05 }}
+        transition={{ duration: 0.45, ease: 'easeOut' }}
         className="space-y-8"
       >
         <div>
@@ -53,10 +53,10 @@ export default function CaseStudy({ project }) {
 
       {/* 2. System Architecture & Flow */}
       <motion.section
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-50px' }}
-        transition={{ duration: 0.5, ease: 'easeOut' }}
+        viewport={{ once: true, amount: 0.05 }}
+        transition={{ duration: 0.45, ease: 'easeOut' }}
         className="space-y-6"
       >
         <div>
@@ -110,10 +110,10 @@ export default function CaseStudy({ project }) {
       {/* 3. Key Engineering Challenges & Technical Decisions */}
       {caseStudy.challenges && caseStudy.challenges.length > 0 && (
         <motion.section
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
+          viewport={{ once: true, amount: 0.05 }}
+          transition={{ duration: 0.45, ease: 'easeOut' }}
           className="space-y-6"
         >
           <div>

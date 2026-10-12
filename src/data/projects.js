@@ -195,10 +195,7 @@ export const projects = [
         "Inquiry Management Pipeline",
         "Catalog & Inquiries Analytics",
       ],
-      integrations: [
-        "WhatsApp Click-to-Chat API",
-        "Direct Phone Protocol",
-      ],
+      integrations: ["WhatsApp Click-to-Chat API", "Direct Phone Protocol"],
       deployment: ["Vercel (Frontend SPA)", "Render (REST API)", "Git CI/CD"],
     },
 
@@ -320,6 +317,374 @@ export const projects = [
       ],
     },
   },
+  {
+    id: "invoice-app",
+    slug: "invoice-app",
+    title: "InvoiceApp",
+    category: "Offline-First Systems / Full-Stack & Mobile",
+    featured: true,
+    tagline:
+      "Offline-first Point-of-Sale (POS), GST compliance suite, and Khata ledger with bi-directional SQLite-to-PostgreSQL delta sync.",
+
+    shortDescription:
+      "An offline-first billing and Point-of-Sale (POS) system engineered for Indian retail counters and mobile field operations. Features 100% offline local SQLite writes with WAL mode, delta batch synchronization to a PostgreSQL cloud backend, an integer-paise financial math engine eliminating floating-point rounding errors, automated CGST/SGST/IGST tax calculation, Rule-46 compliant A4 invoices, 58mm thermal ESC/POS receipt generation, and GSTR-1 CSV exports.",
+
+    description:
+      "InvoiceApp is an enterprise-grade monorepo billing system designed to withstand erratic internet connectivity at retail checkout counters. It pairs an offline-first React Native Android companion app and a Next.js 15 web terminal with a Node.js/Express and PostgreSQL backend. Local mutations are written instantly to SQLite with PRAGMA foreign keys and WAL mode, queuing delta batches that bi-directionally reconcile with cloud PostgreSQL via timestamp-based sync. Built with a strict integer-paise math engine and state-aware GST calculator, it automates tax compliance, customer credit (Udhar Khata), and day-end cash drawer reconciliation (Z-Reports).",
+
+    status: "Active / Monorepo Architecture",
+    image: "/projects/invoiceapp.png",
+
+    technologies: [
+      "Next.js 15",
+      "React Native",
+      "TypeScript",
+      "Node.js",
+      "Express",
+      "Prisma ORM",
+      "PostgreSQL",
+      "SQLite (WAL Mode)",
+      "Expo SDK 50",
+      "Tailwind CSS",
+      "Integer-Paise Math",
+      "ESC/POS Thermal Printing",
+    ],
+
+    techCategories: {
+      frontend: [
+        "Next.js 15 (App Router)",
+        "React 19",
+        "Tailwind CSS v4",
+        "TanStack React Query",
+        "Lucide React",
+      ],
+      mobile: [
+        "React Native 0.73",
+        "Expo SDK 50",
+        "NativeWind",
+        "expo-sqlite (WAL Mode)",
+        "expo-secure-store",
+        "expo-print",
+      ],
+      backend: [
+        "Node.js",
+        "Express",
+        "TypeScript",
+        "Prisma ORM 5.9",
+        "JWT Authentication",
+        "Express Rate Limit",
+        "Helmet Security",
+      ],
+      financialEngine: [
+        "Integer-Paise Currency Engine",
+        "Automated CGST/SGST/IGST Splitter",
+        "Rule-46 A4 Tax Invoices",
+        "58mm ESC/POS Plaintext Receipt Engine",
+        "GSTR-1 CSV Reporting",
+      ],
+      database: [
+        "PostgreSQL (Cloud Central Truth)",
+        "SQLite (Local-First Offline WAL)",
+        "Prisma Migrations",
+      ],
+      architecture: [
+        "npm Workspaces Monorepo",
+        "Bi-directional Delta Batch Sync",
+        "Authoritative Cloud Timestamping",
+        "Offline DAO Mutation Queues",
+      ],
+      deployment: [
+        "Vercel (Web Dashboard)",
+        "Render (Express Cloud API)",
+        "Android APK / Expo Go",
+      ],
+    },
+
+    highlights: [
+      "Offline-First SQLite WAL Storage",
+      "Bi-directional Delta Batch Sync",
+      "Integer-Paise Math (Zero Floating-Point Error)",
+      "Dual Engine: A4 PDF & 58mm Thermal Print",
+    ],
+
+    architecturePills: [
+      { label: "Client DB", value: "SQLite (WAL + FK ON)" },
+      { label: "Cloud DB", value: "PostgreSQL (Prisma ORM)" },
+      { label: "Sync Engine", value: "Delta Batch (Push / Pull)" },
+      { label: "Precision", value: "Integer-Paise (0-Error)" },
+    ],
+
+    links: {
+      live: "https://invoice-web-app-five.vercel.app",
+      github: "https://github.com/Prpandav/InvoiceApp",
+      api: "https://invoiceapp-backend-fmhf.onrender.com/api/v1",
+    },
+
+    architectureFlow: [
+      {
+        phase: "Offline POS & Local SQLite",
+        title: "Zero-Latency Local Mutations",
+        description:
+          "Retail checkout registers and mobile clients execute instant writes against local SQLite (WAL mode, foreign keys enabled), recording transactions with is_synced=0 even without internet connectivity.",
+      },
+      {
+        phase: "Delta Sync & Conflict Engine",
+        title: "Bi-Directional Batch Push / Pull",
+        description:
+          "Upon connectivity, SyncEngine packages pending mutations into delta batches (/sync/push). Once acknowledged, it fetches remote changes created after the last sync timestamp (/sync/pull?since=ts) and upserts them locally.",
+      },
+      {
+        phase: "Cloud Source of Truth & Compliance",
+        title: "PostgreSQL Ledger & GSTR-1 Exports",
+        description:
+          "Express backend orchestrates multi-tenant transactions in PostgreSQL via Prisma 5.9, verifying integer-paise math integrity, updating customer credit ledgers (Khata), and exporting GSTR-1 compliant CSV reports.",
+      },
+    ],
+
+    keyFeatures: [
+      {
+        title: "Bi-Directional Delta Batch Sync Engine",
+        description:
+          "Synchronizes data between edge SQLite databases and central PostgreSQL via HTTP batch endpoints (/sync/push and /sync/pull), transferring only delta modifications since the client's last synchronization timestamp.",
+      },
+      {
+        title: "Integer-Paise Financial Math Engine",
+        description:
+          "Eliminates IEEE-754 floating-point rounding errors by calculating and storing all monetary values strictly in integer paise (e.g. ₹1,250.50 represented as 125050 paise) across shared models, mobile DAOs, and database columns.",
+      },
+      {
+        title: "State-Aware GST Calculation Engine",
+        description:
+          "Dynamically compares business and customer state codes to split taxes into CGST and SGST for intra-state transactions (preventing 1-paise rounding leaks with asymmetric remainder subtraction) or single IGST for inter-state transactions.",
+      },
+      {
+        title: "Dual Printing Architecture (A4 PDF & 58mm Thermal ESC/POS)",
+        description:
+          "Generates official Rule-46 compliant A4 Tax Invoices using vector PDF templates alongside high-speed 58mm plain-text ESC/POS receipts formatted with byte-aligned column wrappers for direct counter thermal printing.",
+      },
+      {
+        title: "Khata Customer Credit & Ledger Tracking",
+        description:
+          "Maintains running balances for wholesale and retail parties with in-place installment settlement, payment history tracking, and automated reminder formatting.",
+      },
+      {
+        title: "Day-End Cash Drawer Reconciliation (Z-Reports)",
+        description:
+          "Provides shop owners with end-of-shift operational audits, breaking down expected vs. counted drawer cash, UPI collections, and credit bills to eliminate cashier discrepancies.",
+      },
+      {
+        title: "GSTR-1 Compliance & Audit CSV Export",
+        description:
+          "Generates government-format GSTR-1 CSV exports detailing B2B and B2C sales, HSN/SAC summaries, and document issue series directly from PostgreSQL query aggregates.",
+      },
+      {
+        title: "Shared Domain Monorepo Architecture",
+        description:
+          "Leverages npm workspaces with @invoice/shared package to enforce unified TypeScript interfaces, validation schemas, and tax calculation formulas identically between Next.js, React Native, and Express.",
+      },
+    ],
+
+    caseStudy: {
+      problem:
+        "Indian retail counters and wholesale distributors face frequent internet outages and high counter rush. Traditional cloud billing SaaS solutions lock checkout counters when connectivity drops, causing customer walkouts. Conversely, naive desktop billing software lacks remote multi-device synchronization and produces floating-point rounding discrepancies during GST tax calculations that fail tax audits.",
+
+      solution:
+        "InvoiceApp implements an offline-first monorepo architecture combining an edge-first SQLite database (WAL mode) on client terminals with a central PostgreSQL cloud backend. Checkout operations execute with sub-5-second latency 100% offline. When internet is detected, an automated delta batch engine reconciles changes bi-directionally without race conditions, while a shared integer-paise math engine guarantees exact tax precision down to a single paisa.",
+
+      architectureOverview:
+        "The system is structured as an npm monorepo (@invoice/shared, apps/web, apps/mobile, apps/server). Client terminals interact with local SQLite DAOs and queue offline mutations. SyncEngine coordinates HTTP delta batches against an Express REST API backed by Prisma 5.9 and PostgreSQL. All currency operations strictly enforce integer paise representations across all tiers.",
+
+      challenges: [
+        {
+          title: "Offline-First Bi-Directional Delta Synchronization",
+          problem:
+            "Transmitting full database snapshots over intermittent mobile cellular networks causes excessive bandwidth consumption, high battery drain, and write lock contention in SQLite.",
+          solution:
+            "Engineered a timestamped delta sync mechanism using is_synced flags and ISO timestamp markers. The client pushes uncommitted rows in atomic batches (/sync/push) and pulls remote changes created since its last known checkpoint (/sync/pull?since=ts), applying changes via idempotent upserts.",
+        },
+        {
+          title: "Eliminating IEEE-754 Floating-Point Financial Discrepancies",
+          problem:
+            "Standard JavaScript Number types introduce binary floating-point inaccuracies (e.g. 0.1 + 0.2 = 0.30000000000000004), accumulating fractional-rupee errors across multi-item invoices that violate GST Rule-46 compliance.",
+          solution:
+            "Implemented an Integer-Paise Math Engine within @invoice/shared. All prices, discounts, line totals, and taxes are rounded and stored as integer paise. During 50/50 CGST/SGST splits, the secondary tax is computed as (totalTax - cgst) to prevent 1-paise rounding leaks.",
+        },
+        {
+          title: "Dual Hardware Output: High-Res A4 vs 58mm Plain-Text Thermal",
+          problem:
+            "Counter cashiers require instantaneous 58mm thermal receipts on low-memory ESC/POS printers, whereas business accountants demand detailed Rule-46 compliant A4 PDFs with tax breakdowns and HSN codes.",
+          solution:
+            "Developed two dedicated printing pipelines: an HTML/CSS vector engine utilizing expo-print for multi-page A4 PDF documents, and a zero-dependency monospace text formatter that pads strings and generates byte-aligned ESC/POS commands for rapid counter printing.",
+        },
+      ],
+    },
+  },
+  {
+    id: "habit-tracker",
+    slug: "habit-tracker",
+    title: "Habit Tracker Pro",
+    category: "Full-Stack / MERN Architecture",
+    featured: true,
+    tagline:
+      "Consistency tracking, streak calculation algorithms, and progress visualization powered by the MERN stack.",
+
+    shortDescription:
+      "A full-stack MERN application engineered for daily habit discipline and long-term consistency. Features interactive goal check-offs, automated daily streak monitoring, dynamic radial progress visualization, weekly performance trend analytics, and authenticated MongoDB user isolation.",
+
+    description:
+      "Habit Tracker Pro represents my foundational milestone into full-stack MERN engineering. Built to transform personal consistency into quantifiable data, it coordinates a React Single Page Application with a Node.js/Express REST API and MongoDB. The system calculates continuous habit streaks across midnight boundaries, tracks real-time daily completion percentages, renders weekly performance curves, and guarantees secure, private user sessions using JWT authentication.",
+
+    status: "Active / Deployed",
+    image: "/projects/habit-tracker.png",
+
+    technologies: [
+      "React",
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "Mongoose",
+      "JWT",
+      "Axios",
+      "REST API",
+      "Vercel",
+    ],
+
+    techCategories: {
+      frontend: [
+        "React",
+        "React Router",
+        "Axios",
+        "SVG Progress Gauge",
+        "Trend Charting",
+      ],
+      backend: [
+        "Node.js",
+        "Express.js",
+        "REST APIs",
+        "Streak Calculation Engine",
+        "JWT Authentication",
+        "bcrypt",
+      ],
+      database: ["MongoDB", "Mongoose ODM", "Data Validation"],
+      architecture: [
+        "Decoupled MERN Architecture",
+        "Optimistic State Updates",
+        "Protected Route Guards",
+      ],
+      deployment: [
+        "Vercel (Frontend SPA)",
+        "Render / Cloud (Express API)",
+      ],
+    },
+
+    highlights: [
+      "Daily Streak Calculation Engine",
+      "Dynamic Radial Completion Gauge",
+      "Weekly Performance Trend Chart",
+      "JWT-Protected User Sessions",
+    ],
+
+    architecturePills: [
+      { label: "Architecture", value: "Decoupled MERN" },
+      { label: "Database", value: "MongoDB (Mongoose)" },
+      { label: "Auth", value: "JWT + bcrypt" },
+      { label: "Analytics", value: "Daily Streaks & Trends" },
+    ],
+
+    links: {
+      live: "https://habit-tracker-pro-theta.vercel.app/",
+      github: "https://github.com/Prpandav/Habit-Tracker-Pro",
+    },
+
+    architectureFlow: [
+      {
+        phase: "Client Interface",
+        title: "Goal Tracking & Visual Feedback",
+        description:
+          "React Single Page Application renders real-time daily progress rings, interactive checklist toggles, and weekly performance curves with optimistic UI updates.",
+      },
+      {
+        phase: "Express REST Services",
+        title: "Habit CRUD & Streak Algorithms",
+        description:
+          "Node.js/Express backend handles habit CRUD endpoints, token verification middleware, and automated streak evaluation logic that prevents multi-check exploitation.",
+      },
+      {
+        phase: "Database Persistence",
+        title: "MongoDB Schemas & Aggregation",
+        description:
+          "Mongoose models record completion timestamps, calculate ongoing streaks, and aggregate historical completions for performance trend visualization.",
+      },
+    ],
+
+    keyFeatures: [
+      {
+        title: "Daily Habit Checklist & Goal Creation",
+        description:
+          "Intuitive interface for creating, editing, and managing daily habits with instant checkbox toggles and optimistic client-side feedback.",
+      },
+      {
+        title: "Automated Streak Calculation Engine",
+        description:
+          "Monitors daily completion dates to award continuous streaks (🔥 X Days) while resetting or maintaining counts based on consecutive 24-hour activity.",
+      },
+      {
+        title: "Radial Daily Completion Progress Ring",
+        description:
+          "Dynamic SVG circular progress ring that calculates real-time completion ratios (e.g. 56% Done across 9 total goals) on the dashboard.",
+      },
+      {
+        title: "Weekly Performance Trend Charting",
+        description:
+          "Visualizes daily task completion volume across the week (Wed through Mon) with interactive data tooltips showing exact daily counts.",
+      },
+      {
+        title: "JWT-Secured User Isolation",
+        description:
+          "Stateless JSON Web Token authentication with password hashing via bcrypt ensures each user's habit routines and progress remain strictly confidential.",
+      },
+      {
+        title: "Decoupled MERN Deployment",
+        description:
+          "Frontend SPA hosted on Vercel communicating with a cloud Node.js/Express REST API backed by MongoDB Atlas.",
+      },
+    ],
+
+    caseStudy: {
+      problem:
+        "Building a reliable habit tracking tool requires more than simple checkboxes. Developers must address date-boundary reconciliation across timezones to calculate honest streaks, provide immediate visual progress feedback to keep users motivated, and ensure that authentication and state updates remain synchronous between client and server.",
+
+      solution:
+        "Habit Tracker Pro resolves this with a decoupled MERN architecture. The client uses optimistic state toggles and SVG gauges for zero-latency feedback, while the Express API enforces date normalization algorithms that evaluate consecutive calendar days for streak integrity backed by MongoDB persistence.",
+
+      architectureOverview:
+        "The architecture separates concerns into a responsive React frontend and a Node.js/Express REST backend. Requests are authenticated via JWT bearer tokens. Habit toggles trigger atomic database updates, updating both daily completion logs and continuous streak fields within MongoDB.",
+
+      challenges: [
+        {
+          title: "Streak Calculation Logic Across Date Boundaries",
+          problem:
+            "Naive streak counters increment on every completion regardless of date, causing users to falsely inflate streaks or lose progress due to local timezone discrepancies.",
+          solution:
+            "Engineered date normalization logic that standardizes completion timestamps to UTC midnight boundaries, verifying consecutive day intervals before incrementing streaks.",
+        },
+        {
+          title: "JWT Authentication State & Protected Route Lifecycle",
+          problem:
+            "Managing token persistence, automatic session restore on page reloads, and redirecting expired sessions without jarring layout flashes.",
+          solution:
+            "Built an authentication context provider in React with Axios interceptors that attach bearer tokens to requests and automatically guard private dashboard routes.",
+        },
+        {
+          title: "Optimistic UI Updates with Server State Synchronization",
+          problem:
+            "Waiting for network responses when checking off a daily goal introduced perceptible lag in progress circle animations.",
+          solution:
+            "Implemented optimistic state updates in React that immediately update checkbox state and recalculate the radial progress ring, automatically reverting if the API call fails.",
+        },
+      ],
+    },
+  },
 ];
 
 /**
@@ -329,27 +694,12 @@ export const projects = [
  */
 export const upcomingProjects = [
   {
-    id: "invoice-app",
-    title: "Invoice Web & Mobile",
-    category: "Full-Stack Application",
-    description: "Multi-platform invoicing and billing management system.",
-    status: "Planned / In Development",
-  },
-  {
     id: "aptitude-platform",
     title: "Aptitude Learning Platform",
     category: "Educational System",
     description:
       "Assessment, question bank, and structured technical learning portal.",
     status: "Planned",
-  },
-  {
-    id: "habit-tracker",
-    title: "Habit Tracker",
-    category: "Productivity Web App",
-    description:
-      "Consistency tracking with progress visualization and streak monitoring.",
-    status: "In Development",
   },
   {
     id: "mvc-blog",
